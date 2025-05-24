@@ -1,0 +1,24 @@
+Mon May 19 17:31:55 2025
+ERROR: Load model error: Error: Error opening file 'cassie-stl-meshes/pelvis.stl': No such file or directory
+
+Sat May 24 17:26:58 2025
+ERROR: Load model error: ParseXML: Error opening file 'model_file': No such file or directory
+
+Sat May 24 17:27:30 2025
+ERROR: Load model error: ParseXML: Error opening file 'model_file': No such file or directory
+
+Sat May 24 17:28:01 2025
+ERROR: Load model error: ParseXML: Error opening file 'model_file': No such file or directory
+
+Sat May 24 17:29:49 2025
+ERROR: Load model error: ParseXML: Error opening file 'model_file': No such file or directory
+
+Sat May 24 17:30:03 2025
+ERROR: Load model error: ParseXML: Error opening file 'model_file': No such file or directory
+
+Sat May 24 17:30:52 2025
+ERROR: Load model error: ParseXML: Error opening file 'model_file': No such file or directory
+
+Sat May 24 17:49:21 2025
+ERROR: Load model error: ParseXML: Error opening file 'C:/Users/navde/OneDrive/Documents/dev/mujoco-3.3.2-windows-x86_64/model/cassie/cassiepole_x_only_hip_knee.xmlcl': No such file or directory
+
