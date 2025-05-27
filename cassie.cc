@@ -244,15 +244,21 @@ int main(int argc, const char** argv) {
      int left_knee_act_id = mj_name2id(m, mjOBJ_ACTUATOR, "left-knee");
      int hip_pitch_act_id = mj_name2id(m, mjOBJ_ACTUATOR, "left-hip-pitch");
      int hip_roll_act_id = mj_name2id(m, mjOBJ_ACTUATOR, "left-hip-roll");
-
+     int hip_yaw_act_id = mj_name2id(m, mjOBJ_ACTUATOR, "left-hip-yaw");
+     int left_foot_act_id = mj_name2id(m, mjOBJ_ACTUATOR, "left-foot");
+     
+     
+     int body_id = mj_name2id(m, mjOBJ_BODY, "left-shin");
    
     
     while (d->time - simstart < 1.0/60.0) {
       mj_step(m, d);
       
-      d->ctrl[hip_roll_act_id] = 0.099;
-      d->ctrl[hip_pitch_act_id] = 0.21;
+      d->ctrl[hip_roll_act_id] = -1.45;
+      d->ctrl[hip_yaw_act_id] = 1.33;
+      d->ctrl[hip_pitch_act_id] = -2.40;
       d->ctrl[left_knee_act_id] = 1.5;
+      d->ctrl[left_foot_act_id] = 0.89;
       
       
     //   if (d->time >= next_print) {
