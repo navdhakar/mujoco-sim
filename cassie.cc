@@ -237,10 +237,10 @@ int main(int argc, const char** argv) {
     double next_print = 0.0;
     mjtNum simstart = d->time;
     // Target foot position (in world coordinates)
-    mjtNum target[3] = {0.15, 0.0, -0.3};  // Example target (x, y, z)
+    mjtNum target[3] = {0.2, 0.05, -0.4};  // Example target (x, y, z)
 
     // Perform IK for "left-foot"
-    // inverseKinematicsToXYZ(m, d, "left-shin", target)
+    // inverseKinematicsToXYZ(m, d, "left-shin", target);
      int left_knee_act_id = mj_name2id(m, mjOBJ_ACTUATOR, "left-knee");
      int hip_pitch_act_id = mj_name2id(m, mjOBJ_ACTUATOR, "left-hip-pitch");
      int hip_roll_act_id = mj_name2id(m, mjOBJ_ACTUATOR, "left-hip-roll");
@@ -248,20 +248,27 @@ int main(int argc, const char** argv) {
      int left_foot_act_id = mj_name2id(m, mjOBJ_ACTUATOR, "left-foot");
      
      
-     int body_id = mj_name2id(m, mjOBJ_BODY, "left-shin");
-   
+     int body_id = mj_name2id(m, mjOBJ_BODY, "left-foot");
+     int sensor_id = mj_name2id(m, mjOBJ_SENSOR, "left-foot-output");
+      // d->ctrl[hip_roll_act_id] = 3.02;
+      // d->ctrl[hip_yaw_act_id] = 0.24;
+      // d->ctrl[hip_pitch_act_id] = 0.21;
+      // d->ctrl[left_knee_act_id] = 1.50;
+      // d->ctrl[left_foot_act_id] = -1.70;
     
     while (d->time - simstart < 1.0/60.0) {
+     
       mj_step(m, d);
       
-      d->ctrl[hip_roll_act_id] = -1.45;
-      d->ctrl[hip_yaw_act_id] = 1.33;
-      d->ctrl[hip_pitch_act_id] = -2.40;
-      d->ctrl[left_knee_act_id] = 1.5;
-      d->ctrl[left_foot_act_id] = 0.89;
-      
-      
-    //   if (d->time >= next_print) {
+    }
+//     if (sensor_id != -1) {
+//     int adr = m->sensor_adr[sensor_id];
+//     printf("Left foot joint position sensor = %.6f\n", d->sensordata[adr]);
+// } else {
+//     printf("Sensor 'left-foot-output' not found!\n");
+// }
+    // Get and print left foot position (world coordinates)
+    // if (d->time >= next_print) {
     //   printf("Time: %.3f\n", d->time);
     //   for (int i = 0; i < m->nq; i++) {
     //     printf("  qpos[%d]: %f\n", i, d->qpos[i]);
@@ -273,7 +280,10 @@ int main(int argc, const char** argv) {
     //   next_print += print_interval;
     //   Sleep(50);  // slow down console output
     // }
-    }
+    mjtNum* foot_pos = d->xpos + 3 * body_id;
+    printf("left_foot_id %d", body_id);
+    printf("Left foot position: x = %.4f, y = %.4f, z = %.4f\n", foot_pos[0], foot_pos[1], foot_pos[2]);
+
 
     // get framebuffer viewport
     mjrRect viewport = {0, 0, 0, 0};
