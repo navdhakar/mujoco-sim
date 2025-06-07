@@ -7,15 +7,20 @@
 // left-hip(thigh): 0.09
 //left shin: 0.4351m
 //left tarsus: 0.4207 m
-#define L1 0.09
-#define L2 0.435
-#define L3 0.420
-#define L3 0.420
+#define L1 0.01
+#define L2 0.09
+#define L3 0.435
+#define L4 0.420
 
-#define a 0.09
-#define b 0.435
-#define c 0.420
+#define a 0.1
+#define b 0.09
+#define c 0.435
 #define d 0.420
+
+#define hip_x 0.0210
+#define hip_y 0.1350
+#define hip_z 1.0096
+
 
 #define DEG2RAD(x) ((x) * M_PI / 180.0)
 #define RAD2DEG(x) ((x) * 180.0 / M_PI)
@@ -41,7 +46,7 @@ int inverseKinematics3Link(double x, double y, double z, double* hip_roll, doubl
     return 0;
 }
 int IK5Dof(double x, double y, double z, double* hip_roll, double* hip_yaw, double* hip_pitch, double* knee, double* foot){
-    double L = sqrt(x*x + y*y + z*z);
+    double L = sqrt((x*x - hip_x*hip_x) + (y*y - hip_y*hip_y) + (z*z - hip_z*hip_z));
     double m = sqrt(L-a*a);
     double L_psi = sqrt(x*x + y*y + (z*z - (d*d - y*y)));
     double L_phi = sqrt(x*x + y*y + (z*z -(-(b*b - y*y))));
@@ -49,7 +54,9 @@ int IK5Dof(double x, double y, double z, double* hip_roll, double* hip_yaw, doub
     double phi = sqrt(L_phi - (a * a));
     *hip_pitch = DEG2RAD(90) - asin(y/psi) - acos(((b*b) - (a*a) - (c*c) + L_psi)/2*b*psi); // theta hip
     *hip_yaw = 0; // we are not considering this DOF.
-    *hip_roll = atan(x/z) + acos(a/sqrt(x*x + z*z)); // theta hip abad
+    *hip_roll = atan(x/z) + acos(a/sqrt(x*x + z*z)) - DEG2RAD(90); // theta hip abad
+    printf("\n%.2f\n", atan(x/z));
+    printf("\n%.2f\n", acos(a/sqrt(x*x + z*z)));
     *knee = acos(((b*b) + (c*c) - psi)/2*b*c);
     *foot = acos(((c*c) + (d*d) - phi)/2*c*d);
     return 0;
@@ -94,7 +101,7 @@ int cassie_leg_ik(double x, double y, double z,
 }
 
 int main() {
-    double x = 0.2, y = 0.05, z = -0.4;  // Desired foot position in meters
+    double x = 0.4, y = 0.0, z = 1.0;  // Desired foot position in meters
 
     double hip_roll, hip_yaw, hip_pitch, knee, foot;
     // if (cassie_leg_ik(x, y, z, &hip_roll, &hip_yaw, &hip_pitch, &knee, &foot) == 0) {

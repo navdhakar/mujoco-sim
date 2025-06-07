@@ -40,7 +40,7 @@ This launches a simple graphics test to verify your MuJoCo visualization is work
 Run the MuJoCo simulation using the Cassie model with restricted joints (hip and knee only):
 
 ```bash
-make cassie_run model="C:/Users/navde/OneDrive/Documents/dev/mujoco-3.3.2-windows-x86_64/model/cassie/cassiepole_x_only_hip_knee.xml"
+make cassie_run model="C:/Users/navde/OneDrive/Documents/dev/mujoco-3.3.2-windows-x86_64/model/cassie/cassiepole_x.xml"
 ```
 
 > ⚠️ *Note:* The IK for this model is still under development and may be unstable.
@@ -54,6 +54,14 @@ This module provides a standalone inverse kinematics solver for a basic 2-link l
 ```bash
 gcc ik_leg.cc -o ik_leg -lm
 ./ik_leg
+```
+
+### 🧠 4. Compile and Run Simplified 5-DOF IK Solver
+
+This is approximate sol. in testing
+
+```bash
+make ik_bi_run
 ```
 
 ---

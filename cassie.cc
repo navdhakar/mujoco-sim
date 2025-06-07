@@ -248,13 +248,18 @@ int main(int argc, const char** argv) {
      int left_foot_act_id = mj_name2id(m, mjOBJ_ACTUATOR, "left-foot");
      
      
-     int body_id = mj_name2id(m, mjOBJ_BODY, "left-foot");
+     int left_foot_body_id = mj_name2id(m, mjOBJ_BODY, "left-foot");
+     int left_tarsus_body_id = mj_name2id(m, mjOBJ_BODY, "left-tarsus");
+     int left_hip_roll_body_id = mj_name2id(m, mjOBJ_BODY, "left-hip-roll");
+     int pelvis_body_id = mj_name2id(m, mjOBJ_BODY, "cassie-pelvis");
+     
+     
      int sensor_id = mj_name2id(m, mjOBJ_SENSOR, "left-foot-output");
-      // d->ctrl[hip_roll_act_id] = 3.02;
-      // d->ctrl[hip_yaw_act_id] = 0.24;
-      // d->ctrl[hip_pitch_act_id] = 0.21;
-      // d->ctrl[left_knee_act_id] = 1.50;
-      // d->ctrl[left_foot_act_id] = -1.70;
+      d->ctrl[hip_roll_act_id] = 0.29;
+      // // d->ctrl[hip_yaw_act_id] = 0.24;
+      // d->ctrl[hip_pitch_act_id] = 0.5;
+      // d->ctrl[left_knee_act_id] = 1.57;
+      // d->ctrl[left_foot_act_id] = 1.60;
     
     while (d->time - simstart < 1.0/60.0) {
      
@@ -280,9 +285,23 @@ int main(int argc, const char** argv) {
     //   next_print += print_interval;
     //   Sleep(50);  // slow down console output
     // }
-    mjtNum* foot_pos = d->xpos + 3 * body_id;
-    printf("left_foot_id %d", body_id);
-    printf("Left foot position: x = %.4f, y = %.4f, z = %.4f\n", foot_pos[0], foot_pos[1], foot_pos[2]);
+    mjtNum* left_foot_pos = d->xpos + 3 * left_foot_body_id;
+    mjtNum* left_tarsus_pos = d->xpos + 3 * left_tarsus_body_id;
+    mjtNum* left_hip_roll_pos = d->xpos + 3 * left_hip_roll_body_id;
+    mjtNum* pelvis_pos = d->xpos + 3 * pelvis_body_id;
+
+    int qpos_adr = m->jnt_qposadr[hip_roll_act_id];
+    double hip_roll_angle_rad = d->qpos[qpos_adr];
+    printf("Left hip roll joint angle: %f radians\n", hip_roll_angle_rad);
+    
+    printf("left_foot_id %d \n", left_foot_body_id);
+    printf("Left foot position: x = %.4f, y = %.4f, z = %.4f\n", left_foot_pos[0], left_foot_pos[1], left_foot_pos[2]);
+    // printf("left_tarsus_body_id %d \n", left_tarsus_body_id);
+    // printf("Left tarsus position: x = %.4f, y = %.4f, z = %.4f\n", left_tarsus_pos[0], left_tarsus_pos[1], left_tarsus_pos[2]);
+    // printf("left_hip_roll_id %d \n", left_hip_roll_body_id);
+    // printf("Left hip roll position: x = %.4f, y = %.4f, z = %.4f\n", left_hip_roll_pos[0], left_hip_roll_pos[1], left_hip_roll_pos[2]);
+    // printf("pelvis_id %d \n", pelvis_body_id);
+    // printf("pelvis position: x = %.4f, y = %.4f, z = %.4f\n", pelvis_pos[0], pelvis_pos[1], pelvis_pos[2]);
 
 
     // get framebuffer viewport
